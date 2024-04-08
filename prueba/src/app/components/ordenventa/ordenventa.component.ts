@@ -28,6 +28,7 @@ export class OrdenVentaComponent implements OnInit {
   ngOnInit(): void {
     this.cargarOrdenesVenta();
     this.loadUsers();
+    this.loadUserRole();
   }
 
   loadUsers(): void {

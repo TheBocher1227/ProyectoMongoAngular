@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Category } from '../../Interfaces/category';
 import { CategoryService } from '../../services/category.service';
 import { CommonModule } from '@angular/common';
@@ -11,7 +11,7 @@ import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-categories',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule],
   templateUrl: './categorias.component.html',
   styleUrls: ['./categorias.component.css']
 })
@@ -30,16 +30,19 @@ export class CategoriesComponent implements OnInit {
   tempCategory: Category | null = null;  
   registerMessage: string | null = null;  
 
-  categoriaform = new FormGroup({
-    tipo_categoria: new FormControl('', [Validators.required]),
-   
+  categoriaform = this.fb.group({
+    tipo_categoria: ['', Validators.required],
   });
 
-  constructor(private categoryService: CategoryService, private AuthService: AuthService) {}
+  updateForm: FormGroup = new FormGroup({});
+  constructor(private formBuilder: FormBuilder,private fb: FormBuilder,private categoryService: CategoryService, private AuthService: AuthService) {}
 
   ngOnInit(): void {
     this.loadCategories();
     this.loadUserRole();
+    this.updateForm = this.formBuilder.group({
+      tipo_categoria: ['', Validators.required]
+    });
   }
 
   loadCategories(): void {
@@ -61,7 +64,7 @@ export class CategoriesComponent implements OnInit {
   
   
 
-  addCategory(newCategoryValue: string): void {
+  addCategory(newCategoryValue: any): void {
     const token = localStorage.getItem('token') || '';
     const newCategory: Category = { id: 0, tipo_categoria: newCategoryValue };
     this.categoryService.addCategory(newCategory, token).subscribe(
@@ -74,21 +77,17 @@ export class CategoriesComponent implements OnInit {
         this.messagedeletevalid=null;
         this.messageupdateinvalid = null;
         this.messagedeleteinvalid = null; 
-       this.messagedeleteinvalid=null;
-
-
-        
-    
+        this.messagedeleteinvalid=null;
       },
       error => {
         this.registerMessage = 'Error al agregar categoría. Por favor, inténtelo de nuevo.';
-        this.messagebad= error.error.data.tipo_categoria[0]; 
+        this.messagebad= error.error?.data?.tipo_categoria[0]; 
         this.messageupdatevalid = null;
         this.messagedeletevalid=null;
         this.message=null
         this.messageupdateinvalid = null;
         this.messagedeleteinvalid=null;
-
+        console.log(error);
       }
     );
   }
@@ -112,7 +111,8 @@ export class CategoriesComponent implements OnInit {
     if (this.tempCategory) {
       this.categoryService.updateCategory(this.tempCategory, token).subscribe(
         response => {
-        
+          
+          console.log(this.tempCategory);
           this.registerMessage = response.msg;
           this.messageupdatevalid = response.msg;
           this.messageupdateinvalid=null;
@@ -122,7 +122,7 @@ export class CategoriesComponent implements OnInit {
         error => {
           this.registerMessage = 'Error al actualizar categoría. Por favor, inténtelo de nuevo.';
           this.messageupdateinvalid= error.error.data.tipo_categoria[0]; 
-          
+          console.log(error);
          
          
         }
