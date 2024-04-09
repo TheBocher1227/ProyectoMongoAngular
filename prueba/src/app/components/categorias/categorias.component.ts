@@ -88,6 +88,7 @@ export class CategoriesComponent implements OnInit {
         this.messageupdateinvalid = null;
         this.messagedeleteinvalid=null;
         console.log(error);
+        
       }
     );
   }
