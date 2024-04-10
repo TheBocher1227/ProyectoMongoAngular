@@ -17,7 +17,6 @@ class OrdenVentaAccesorioController extends Controller
             "orden_venta"=>"required|exists:orden_venta,id",
             "accesorio"=>"required|exists:accesorios,id",
             "cantidad"=>"required",
-            
         ]
       );
 
@@ -34,7 +33,7 @@ class OrdenVentaAccesorioController extends Controller
       
       
       $ordenventa->save();
-      $data=$ordenventa->toArray();
+      $data = " orden_venta: "  . $request->orden_venta . " accesorio: " . $request->accesorio . " cantidad: " . $request->cantidad ;
       $user_id = Auth::id();
       LogHistoryController::store($request, 'ordenventaaccesorio', $data, $user_id);
       return response()->json(["msg"=>"orden_venta_accesorio agregada correctamente"],200);
@@ -53,7 +52,7 @@ class OrdenVentaAccesorioController extends Controller
 
         if($ordenventa)
         {
-          $data=$ordenventa->toArray();
+          $data = " orden_venta: "  . $request->orden_venta . " accesorio: " . $request->accesorio . " cantidad: " . $request->cantidad ;
             $ordenventa->delete();
             $user_id = Auth::id();
             LogHistoryController::store($request, 'ordenventaaccesorio', $data, $user_id);
@@ -87,7 +86,7 @@ class OrdenVentaAccesorioController extends Controller
        
 
         $ordenventa->save();
-        $data=$ordenventa->toArray();
+        $data = " orden_venta: "  . $request->orden_venta . " accesorio: " . $request->accesorio . " cantidad: " . $request->cantidad ;
         $user_id = Auth::id();
         LogHistoryController::store($request, 'ordenventaaccesorio', $data, $user_id);
           return response()->json(["msg"=>"orden_venta_accesorio actualizada","data"=> $ordenventa],202);

@@ -40,7 +40,7 @@ class CategoriasController extends Controller
         $categoria->save();
         
 
-        $logData = "Tipo de categoría: " . $request->tipo_categoria;
+        $logData = "Tipo de categoría: " . $request->tipo_categoria  ;
        
         $user_id = Auth::id();
         
@@ -72,8 +72,6 @@ class CategoriasController extends Controller
         $categoria->save();
         $data = "Tipo de categoría: " . $request->tipo_categoria;
         $user_id = Auth::id();
-        
-        
         LogHistoryController::store($request, 'categoria', $data, $user_id);
         return response()->json(["msg"=>"categoria actualizada","data"=>$categoria,],202);
       }
@@ -92,7 +90,7 @@ class CategoriasController extends Controller
 
         if($categoria)
         {
-          $data = $categoria->toArray();
+          $data = "Tipo de categoria:" . $request->tipo_categoria;
 
           $categoria->delete();
           $user_id = Auth::id();
@@ -101,32 +99,6 @@ class CategoriasController extends Controller
         }
         return response()->json(["msg"=>"No se encontro la categoria"],404);
     }
-
-    public function getCategoriasUpdates(Request $request)
-    {
-        $request->headers->set('Content-Type', 'text/event-stream');
-        $request->headers->set('Cache-Control', 'no-cache');
-        $request->headers->set('Connection', 'keep-alive');
-    
-        // Mantener la conexión abierta
-        while (true) {
-            // Aquí podrías verificar si hay actualizaciones en tus categorías
-            // Por simplicidad, enviaré un mensaje cada segundo
-            echo "data: " . json_encode(Categoria::all()) . "\n\n";
-            ob_flush();
-            flush();
-            // Esperar antes de enviar el próximo mensaje
-            sleep(1);
-        }
-    
-        
-        return response()->make('', 200, [
-            'Content-Type' => 'text/event-stream',
-            'Cache-Control' => 'no-cache',
-            'Connection' => 'keep-alive',
-        ]);
-    }
-
     
    
 

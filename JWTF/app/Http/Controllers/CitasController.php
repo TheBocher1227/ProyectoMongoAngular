@@ -39,10 +39,8 @@ class CitasController extends Controller
       $cita->dispositivo=$request->dispositivo;
       $cita->usuario=$request->usuario;
       $cita->hora_cita=$request->hora_cita;
-      
-      
       $cita->save();
-      $data= $cita->toArray();
+      $data = " fecha_cita: "  . $request->fecha_cita . " motivo_cita: " . $request->motivo_cita . " estado_cita: " . $request->estado_cita . " dispositivo: " . $request->dispositivo ." usuario: " . $request->usuario . "hora_cita: " . $request->hora_cita;
       $user_id = Auth::id();
       LogHistoryController::store($request, 'Cita', $data, $user_id);
       return response()->json(["msg"=>"cita agregada correctamente"],200);
@@ -61,7 +59,7 @@ class CitasController extends Controller
 
         if($cita)
         { 
-          $data = $cita->toArray();
+          $data = " fecha_cita: "  . $request->fecha_cita . " motivo_cita: " . $request->motivo_cita . " estado_cita: " . $request->estado_cita . " dispositivo: " . $request->dispositivo ." usuario: " . $request->usuario . "hora_cita: " . $request->hora_cita;
             $cita->delete();
             $user_id = Auth::id();
             LogHistoryController::store($request, 'Cita', $data, $user_id);
@@ -101,7 +99,7 @@ class CitasController extends Controller
         $cita->usuario=$request->get('usuario', $cita->usuario);
         $cita->hora_cita=$request->get('hora_cita', $cita->hora_cita);
         $cita->save();
-        $data= $cita->toArray();
+        $data = " fecha_cita: "  . $request->fecha_cita . " motivo_cita: " . $request->motivo_cita . " estado_cita: " . $request->estado_cita . " dispositivo: " . $request->dispositivo ." usuario: " . $request->usuario . "hora_cita: " . $request->hora_cita;
         $user_id = Auth::id();
         LogHistoryController::store($request, 'Cita', $data, $user_id);
           return response()->json(["msg"=>"cita actualizada","data"=> $cita],202);

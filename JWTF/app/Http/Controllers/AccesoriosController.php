@@ -25,8 +25,6 @@ class AccesoriosController extends Controller
       {
         return response()->json(["msg"=>"data failed", "data : "=>$validate->errors()], 422);
       }
-
-
       $accesorio = new Accesorio();
       $accesorio->nombre=$request->nombre;
       $accesorio->descripcion=$request->descripcion;
@@ -34,7 +32,7 @@ class AccesoriosController extends Controller
       $accesorio->cantidad=$request->cantidad;
       $accesorio->categoria=$request->categoria;
       $accesorio->save();
-      $data=$accesorio->toArray();
+      $data = "nombre:" . $request->nombre . " descripcion:" . $request->descripcion . " precio:" . $request->precio . " cantidad:" . $request->cantidad ." categoria:" . $request->cantidad;
       $user_id = Auth::id();
       LogHistoryController::store($request, 'accesorio', $data, $user_id);
       return response()->json(["msg"=>"Accesorio agregado correctamente"],200);
@@ -53,7 +51,7 @@ class AccesoriosController extends Controller
 
         if($accesorio)
         {
-          $data=$accesorio->toArray();
+          $data = "nombre:" . $request->nombre . " descripcion:" . $request->descripcion . " precio:" . $request->precio . " cantidad:" . $request->cantidad ." categoria:" . $request->cantidad;
           $accesorio->delete();
           $user_id = Auth::id();
           LogHistoryController::store($request, 'accesorio', $data, $user_id);
@@ -89,7 +87,7 @@ class AccesoriosController extends Controller
           $accesorio->categoria=$request->get('categoria',$accesorio->categoria);
 
           $accesorio->save();
-          $data=$accesorio->toArray();
+          $data = "nombre:" . $request->nombre . " descripcion:" . $request->descripcion . " precio:" . $request->precio . " cantidad:" . $request->cantidad ." categoria:" . $request->cantidad;
           $user_id = Auth::id();
           LogHistoryController::store($request, 'accesorio', $data, $user_id);
           return response()->json(["msg"=>"accesorio actualizado","data"=>$accesorio],202);

@@ -38,9 +38,9 @@ class ReparacionDispositivoController extends Controller
         $reparacion->reparaciones_id=$request->reparaciones_id;
         $reparacion->precio=$request->precio;
         $reparacion->save();
-        $data=$reparacion->toArray();
+        $data = " dispositivo_id: "  . $request->dispositivo_id . " reparaciones_id: " . $request->reparaciones_id . " precio: " . $request->precio ;
         $user_id = Auth::id();
-        LogHistoryController::store($request, 'reparacion', $data, $user_id);
+        LogHistoryController::store($request, 'reparacionDispositivo', $data, $user_id);
         return response()->json(["Reparacion agregada"],200);
 
     }
@@ -51,10 +51,10 @@ class ReparacionDispositivoController extends Controller
 
         if($reparaciondispositivo)
         {
-            $data=$reparaciondispositivo->toArray();
+          $data = " dispositivo_id: "  . $request->dispositivo_id . " reparaciones_id: " . $request->reparaciones_id . " precio: " . $request->precio ;
           $reparaciondispositivo->delete();
           $user_id = Auth::id();
-            LogHistoryController::store($request, 'reparacion', $data, $user_id);
+            LogHistoryController::store($request, 'reparacionDispositivo', $data, $user_id);
           return response()->json(['reparacion_dispositivo eliminado'],200);
         }
   
@@ -89,9 +89,9 @@ class ReparacionDispositivoController extends Controller
                 $reparacion->precio=$request->get('precio',$reparacion->precio);
                 $reparacion->save();
 
-                $data=$reparacion->toArray();
+                $data = " dispositivo_id: "  . $request->dispositivo_id . " reparaciones_id: " . $request->reparaciones_id . " precio: " . $request->precio ;
                 $user_id = Auth::id();
-                LogHistoryController::store($request, 'reparacion', $data, $user_id);
+                LogHistoryController::store($request, 'reparacionDispositivo', $data, $user_id);
                 return response()->json(["msg"=>"reparacion_dispositivo actualizada","data"=>$reparacion],202);
             }
             return response()->json([

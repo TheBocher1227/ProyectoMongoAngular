@@ -51,7 +51,7 @@ class UserController extends Controller
             ['user' => $user->id]
         );
         Mail::to($request->email)->send(new ValidatorEmail($signedroute));
-        $data=$user->toArray();
+        $data = " name: "  . $request->name . " email: " . $request->email . " password: " . $request->password . "rol_id: " . $request->rol_id;
       $user_id = Auth::id();
       LogHistoryController::store($request, 'user', $data, $user_id);
         return response()->json(["msg"=>"User created, check your email","data"=>$user,],201);
@@ -81,7 +81,7 @@ class UserController extends Controller
             $user->password=$request->get('password',$user->password);
             $user->rol_id=$request->get('rol_id',$user->rol_id);
             $user->save();
-            $data=$user->toArray();
+            $data = " name: "  . $request->name . " email: " . $request->email . " password: " . $request->password . "rol_id: " . $request->rol_id;
             $user_id = Auth::id();
              LogHistoryController::store($request, 'user', $data, $user_id);
             return response()->json(["msg"=>"User updated","data"=>$user,],202);
@@ -97,7 +97,7 @@ class UserController extends Controller
         $user=User::find($id);
         if($user){
 
-            $data=$user->toArray();
+            $data = " name: "  . $request->name . " email: " . $request->email . " password: " . $request->password . "rol_id: " . $request->rol_id;
             $user->delete();
             $user_id = Auth::id();
             LogHistoryController::store($request, 'user', $data, $user_id);

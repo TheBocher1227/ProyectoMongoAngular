@@ -15,7 +15,7 @@ class IngresoReparacionesController extends Controller
       $validate = Validator::make(
         $request->all(),[
             "user"=>"required|exists:users,id",
-            
+            "dispositivo"=>"required|exists:dispositivos,id",  
             "reparacion"=>"required|exists:reparaciones,id",
             "descripcion"=>"required|min:1",
             "fecha_ingreso"=>"required",
@@ -39,7 +39,7 @@ class IngresoReparacionesController extends Controller
       $ingreso->fecha_ingreso=$request->fecha_ingreso;
       $ingreso->estatus=$request->estatus;
       
-      $data=$ingreso->toArray();
+      $data = " user: "  . $request->user . " dispositivo: " . $request->dispositivo . " reparacion: " . $request->reparacion . " descripcion: " . $request->descripcion . " fecha_ingreso: " . $request->fecha_ingreso . " estatus: " . $request->estatus;
       $user_id = Auth::id();
       LogHistoryController::store($request, 'ingreso', $data, $user_id);
       $ingreso->save();
@@ -59,7 +59,7 @@ class IngresoReparacionesController extends Controller
 
         if($ingreso)
         {
-          $data=$ingreso->toArray();
+          $data = " user: "  . $request->user . " dispositivo: " . $request->dispositivo . " reparacion: " . $request->reparacion . " descripcion: " . $request->descripcion . " fecha_ingreso: " . $request->fecha_ingreso . " estatus: " . $request->estatus;
             $ingreso->delete();
             $user_id = Auth::id();
         LogHistoryController::store($request, 'ingreso', $data, $user_id);
@@ -73,11 +73,13 @@ class IngresoReparacionesController extends Controller
     {
         $validate = Validator::make(
             $request->all(),[
-                "user"=>"required|exists:users,id",
-                "reparacion"=>"required|exists:reparaciones,id",
-                "descripcion"=>"required|min:1",
-                "fecha_ingreso"=>"required",
-                "estatus"=>"required|min:1|max:9",
+              "user"=>"required|exists:users,id",
+              "dispositivo"=>"required|exists:dispositivos,id",  
+              "reparacion"=>"required|exists:reparaciones,id",
+              "descripcion"=>"required|min:1",
+              "fecha_ingreso"=>"required",
+              "estatus"=>"required|min:1|max:9",
+  
     
                 
             ]
@@ -99,7 +101,7 @@ class IngresoReparacionesController extends Controller
        
 
         $ingreso->save();
-        $data=$ingreso->toArray();
+        $data = " user: "  . $request->user . " dispositivo: " . $request->dispositivo . " reparacion: " . $request->reparacion . " descripcion: " . $request->descripcion . " fecha_ingreso: " . $request->fecha_ingreso . " estatus: " . $request->estatus;
         $user_id = Auth::id();
         LogHistoryController::store($request, 'ingreso', $data, $user_id);
           return response()->json(["msg"=>"ingreso a reparar actualizado","data"=> $ingreso],202);

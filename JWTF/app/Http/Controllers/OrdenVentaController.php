@@ -33,7 +33,7 @@ class OrdenVentaController extends Controller
       $ordenventa->tipo_venta=$request->tipo_venta;
       
       $ordenventa->save();
-      $data=$ordenventa->toArray();
+      $data = " fecha_orden: "  . $request->fecha_orden . " estado: " . $request->estado . " user: " . $request->user . " tipo_venta: " . $request->tipo_venta;
       $user_id = Auth::id();
       LogHistoryController::store($request, 'ordenventa', $data, $user_id);
       return response()->json(["msg"=>"orden:venta agregada correctamente"],200);
@@ -52,7 +52,7 @@ class OrdenVentaController extends Controller
 
         if($ordenventa)
         {
-          $data=$ordenventa->toArray();
+          $data = " fecha_orden: "  . $request->fecha_orden . " estado: " . $request->estado . " user: " . $request->user . " tipo_venta: " . $request->tipo_venta;
             $ordenventa->delete();
             $user_id = Auth::id();
             LogHistoryController::store($request, 'ordenventa', $data, $user_id);
@@ -85,7 +85,7 @@ class OrdenVentaController extends Controller
         $ordenventa->user=$request->get('user', $ordenventa->user);
         $ordenventa->tipo_venta=$request->get('tipo_venta', $ordenventa->tipo_venta);
         $ordenventa->save();
-        $data=$ordenventa->toArray();
+        $data = " fecha_orden: "  . $request->fecha_orden . " estado: " . $request->estado . " user: " . $request->user . " tipo_venta: " . $request->tipo_venta;
         $user_id = Auth::id();
        LogHistoryController::store($request, 'ordenventa', $data, $user_id);
           return response()->json(["msg"=>"orden_venta actualizada","data"=> $ordenventa],202);

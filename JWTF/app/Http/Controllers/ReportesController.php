@@ -43,7 +43,7 @@ class ReportesController extends Controller
       $reporte->fecha_entrega=$request->fecha_entrega;
       $reporte->ingreso=$request->ingreso;
       $reporte->save();
-      $data=$reporte->toArray();
+      $data = " precio: "  . $request->precio . "fecha_entrega: " . $request->fecha_entrega . " ingreso: " . $request->ingreso;
     $user_id = Auth::id();
     LogHistoryController::store($request, 'reporte', $data, $user_id);
       return response()->json(["msg"=>"reporte agregado correctamente"],200);
@@ -73,7 +73,7 @@ class ReportesController extends Controller
         $reporte->ingreso=$request->get('ingreso',$reporte->ingreso);
 
         $reporte->save();
-        $data=$reporte->toArray();
+        $data = " precio: "  . $request->precio . "fecha_entrega: " . $request->fecha_entrega . " ingreso: " . $request->ingreso;
         $user_id = Auth::id();
         LogHistoryController::store($request, 'reporte', $data, $user_id);
         return response()->json(["msg"=>"reporte actualizado","data"=>$reporte,],202);
@@ -94,7 +94,7 @@ class ReportesController extends Controller
         if($reporte)
         {
 
-          $data=$reporte->toArray();
+          $data = " precio: "  . $request->precio . "fecha_entrega: " . $request->fecha_entrega . " ingreso: " . $request->ingreso;
           $reporte->delete();
           $user_id = Auth::id();
           LogHistoryController::store($request, 'reporte', $data, $user_id);

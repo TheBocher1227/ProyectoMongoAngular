@@ -33,9 +33,9 @@ class ReparacionesController extends Controller
     $reparaciones = new Reparacion();
     $reparaciones->tipo_reparaciones=$request->tipo_reparaciones;
     $reparaciones->save();
-    $data=$reparaciones->toArray();
+    $data = " tipo_reparaciones: "  . $request->tipo_reparaciones ;
     $user_id = Auth::id();
-    LogHistoryController::store($request, 'reparacion', $data, $user_id);
+    LogHistoryController::store($request, 'tiporeparacion', $data, $user_id);
     return response()->json(["Reparacion agregada correctamente "],200);
     }
 
@@ -58,9 +58,9 @@ class ReparacionesController extends Controller
           {
             $reparacion->tipo_reparaciones=$request->get('tipo_reparaciones',$reparacion->tipo_reparaciones);
             $reparacion->save();
-            $data=$reparacion->toArray();
+            $data = " tipo_reparaciones: "  . $request->tipo_reparaciones ;
             $user_id = Auth::id();
-            LogHistoryController::store($request, 'reparacion', $data, $user_id);
+            LogHistoryController::store($request, 'tiporeparacion', $data, $user_id);
             return response()->json(["msg"=>"reparacion actualizada","data"=>$reparacion,],202);
           }
           return response()->json([
@@ -76,10 +76,10 @@ class ReparacionesController extends Controller
 
         if($reparacion)
         {
-          $data=$reparacion->toarray();
+          $data = " tipo_reparaciones: "  . $request->tipo_reparaciones ;
           $reparacion->delete();
           $user_id = Auth::id();
-          LogHistoryController::store($request, 'reparacion', $data, $user_id);
+          LogHistoryController::store($request, 'tiporeparacion', $data, $user_id);
           return response()->json(["reparacion eliminada correctamente"],200);
         }
         return response()->json(["No se encontro la reparacion"],404);

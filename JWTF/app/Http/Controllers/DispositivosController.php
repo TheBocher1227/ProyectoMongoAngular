@@ -43,7 +43,7 @@ class DispositivosController extends Controller
         $dispositivo->tipo_dispositivos=$request->tipo_dispositivos;
         $dispositivo->save();
 
-        $data=$dispositivo->toarray();
+        $data = " marca: "  . $request->marca . " modelo: " . $request->modelo . " tipo_dispositivos: " . $request->tipo_dispositivos ;
         $user_id = Auth::id();
         LogHistoryController::store($request, 'dispositivo', $data, $user_id);
         return response()->json(["msg"=>"Dispositivo agregado correctamente"],200);
@@ -75,7 +75,7 @@ class DispositivosController extends Controller
             $dispositivo->modelo=$request->get('modelo',$dispositivo->marca);
             $dispositivo->tipo_dispositivos=$request->get('tipo_dispositivos',$dispositivo->tipo_dispositivos);
             $dispositivo->save();
-            $data=$dispositivo->toarray();
+            $data = " marca: "  . $request->marca . " modelo: " . $request->modelo . " tipo_dispositivos: " . $request->tipo_dispositivos ;
             $user_id = Auth::id();
             LogHistoryController::store($request, 'dispositivo', $data, $user_id);
             return response()->json(["msg"=>"categoria actualizada","data"=>$dispositivo],202);
@@ -95,9 +95,7 @@ class DispositivosController extends Controller
 
       if($dispositivo)
       {
-        $data=$dispositivo->toArray();
-
-
+        $data = " marca: "  . $request->marca . " modelo: " . $request->modelo . " tipo_dispositivos: " . $request->tipo_dispositivos ;
         $dispositivo->delete();
         $user_id = Auth::id();
         LogHistoryController::store($request, 'dispositivo', $data, $user_id);
